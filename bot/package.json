@@ -1,0 +1,20 @@
+{
+  "name": "skillsbay-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx index.ts",
+    "dev": "tsx watch index.ts"
+  },
+  "dependencies": {
+    "grammy": "^1.21.1",
+    "openai": "^4.28.0",
+    "dotenv": "^16.4.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.6.3",
+    "@types/node": "^20.5.7"
+  }
+}
