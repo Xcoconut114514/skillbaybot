@@ -418,7 +418,7 @@ export default function SkillsPage() {
       </div>
 
       {/* My Skills Section */}
-      {userSkills && Array.isArray(userSkills) && userSkills.length > 0 && (
+      {Array.isArray(userSkills) && userSkills.length > 0 && (
         <Card className="mb-8">
           <CardHeader>
             <h2 className="text-2xl font-bold">My Skills</h2>
