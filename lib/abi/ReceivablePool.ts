@@ -1,0 +1,591 @@
+export const ReceivablePoolAbi = [
+            {
+                "type": "constructor",
+                "inputs": [
+                    {
+                        "name": "stablecoin_",
+                        "type": "address",
+                        "internalType": "contract IERC20"
+                    },
+                    {
+                        "name": "registry_",
+                        "type": "address",
+                        "internalType": "contract ICommodityAssetRegistry"
+                    },
+                    {
+                        "name": "owner_",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "availableLiquidity",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "createFinancingDeal",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "borrower",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "payer",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "interestRateBps",
+                        "type": "uint16",
+                        "internalType": "uint16"
+                    },
+                    {
+                        "name": "tenorDays",
+                        "type": "uint64",
+                        "internalType": "uint64"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "dealId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "deals",
+                "inputs": [
+                    {
+                        "name": "",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "borrower",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "payer",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "principal",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "interestRateBps",
+                        "type": "uint16",
+                        "internalType": "uint16"
+                    },
+                    {
+                        "name": "startDate",
+                        "type": "uint64",
+                        "internalType": "uint64"
+                    },
+                    {
+                        "name": "dueDate",
+                        "type": "uint64",
+                        "internalType": "uint64"
+                    },
+                    {
+                        "name": "interestAmount",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "drawnAmount",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "repaid",
+                        "type": "bool",
+                        "internalType": "bool"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "deposit",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "drawdown",
+                "inputs": [
+                    {
+                        "name": "dealId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "lpBalanceOf",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "lp",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "nextDealId",
+                "inputs": [],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "owner",
+                "inputs": [],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "payoffAmount",
+                "inputs": [
+                    {
+                        "name": "dealId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "poolTotalDeposits",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "registerAsset",
+                "inputs": [
+                    {
+                        "name": "issuer",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "internalType": "string"
+                    },
+                    {
+                        "name": "metadataURI",
+                        "type": "string",
+                        "internalType": "string"
+                    },
+                    {
+                        "name": "quantity",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "unit",
+                        "type": "string",
+                        "internalType": "string"
+                    },
+                    {
+                        "name": "referenceValue",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "status",
+                        "type": "uint8",
+                        "internalType": "enum ICommodityAssetRegistry.AssetStatus"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "registry",
+                "inputs": [],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address",
+                        "internalType": "contract ICommodityAssetRegistry"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "renounceOwnership",
+                "inputs": [],
+                "outputs": [],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "repay",
+                "inputs": [
+                    {
+                        "name": "dealId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "reservedInterest",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "stablecoin",
+                "inputs": [],
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address",
+                        "internalType": "contract IERC20"
+                    }
+                ],
+                "stateMutability": "view"
+            },
+            {
+                "type": "function",
+                "name": "transferOwnership",
+                "inputs": [
+                    {
+                        "name": "newOwner",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "updateAssetStatus",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "status",
+                        "type": "uint8",
+                        "internalType": "enum ICommodityAssetRegistry.AssetStatus"
+                    }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "function",
+                "name": "withdraw",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
+            },
+            {
+                "type": "event",
+                "name": "DealCreated",
+                "inputs": [
+                    {
+                        "name": "dealId",
+                        "type": "uint256",
+                        "indexed": true,
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "indexed": true,
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "borrower",
+                        "type": "address",
+                        "indexed": true,
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "principal",
+                        "type": "uint256",
+                        "indexed": false,
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "interestRateBps",
+                        "type": "uint16",
+                        "indexed": false,
+                        "internalType": "uint16"
+                    },
+                    {
+                        "name": "tenorDays",
+                        "type": "uint64",
+                        "indexed": false,
+                        "internalType": "uint64"
+                    }
+                ],
+                "anonymous": false
+            },
+            {
+                "type": "event",
+                "name": "DealRepaid",
+                "inputs": [
+                    {
+                        "name": "dealId",
+                        "type": "uint256",
+                        "indexed": true,
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "payoffAmount",
+                        "type": "uint256",
+                        "indexed": false,
+                        "internalType": "uint256"
+                    }
+                ],
+                "anonymous": false
+            },
+            {
+                "type": "event",
+                "name": "Deposited",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "indexed": true,
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "lp",
+                        "type": "address",
+                        "indexed": true,
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "uint256",
+                        "indexed": false,
+                        "internalType": "uint256"
+                    }
+                ],
+                "anonymous": false
+            },
+            {
+                "type": "event",
+                "name": "OwnershipTransferred",
+                "inputs": [
+                    {
+                        "name": "previousOwner",
+                        "type": "address",
+                        "indexed": true,
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "newOwner",
+                        "type": "address",
+                        "indexed": true,
+                        "internalType": "address"
+                    }
+                ],
+                "anonymous": false
+            },
+            {
+                "type": "event",
+                "name": "Withdrawn",
+                "inputs": [
+                    {
+                        "name": "assetId",
+                        "type": "uint256",
+                        "indexed": true,
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "lp",
+                        "type": "address",
+                        "indexed": true,
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "uint256",
+                        "indexed": false,
+                        "internalType": "uint256"
+                    }
+                ],
+                "anonymous": false
+            },
+            {
+                "type": "error",
+                "name": "OwnableInvalidOwner",
+                "inputs": [
+                    {
+                        "name": "owner",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "OwnableUnauthorizedAccount",
+                "inputs": [
+                    {
+                        "name": "account",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ]
+            },
+            {
+                "type": "error",
+                "name": "SafeERC20FailedOperation",
+                "inputs": [
+                    {
+                        "name": "token",
+                        "type": "address",
+                        "internalType": "address"
+                    }
+                ]
+            }
+        ] as const;

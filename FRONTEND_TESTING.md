@@ -1,0 +1,322 @@
+# 前端联调测试指南
+
+## ✅ 合约已部署
+
+你的合约已成功部署到本地 Anvil 节点：
+
+```
+AttentionToken: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+StreamerStakingPool: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+ViewerRewardPool: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+```
+
+前端配置已自动更新！✨
+
+## 🚀 启动前端
+
+### 1. 安装依赖（如果还没安装）
+
+```bash
+cd AttentionLive
+npm install
+# 或
+pnpm install
+```
+
+### 2. 启动开发服务器
+
+```bash
+npm run dev
+# 或
+pnpm dev
+```
+
+访问: http://localhost:3000
+
+## 🦊 配置 MetaMask
+
+### 1. 添加本地网络
+
+在 MetaMask 中添加自定义网络：
+
+- **Network Name**: `Localhost 8545`
+- **RPC URL**: `http://127.0.0.1:8545`
+- **Chain ID**: `31337`
+- **Currency Symbol**: `ETH`
+
+### 2. 导入测试账户
+
+使用 Anvil 提供的私钥导入账户：
+
+**账户 0 (Deployer/Owner):**
+- 地址: `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`
+- 私钥: `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`
+- 余额: ~10000 ETH + 85M ATT
+
+**账户 1 (Streamer):**
+- 地址: `0x70997970C51812dc3A010C7d01b50e0d17dc79C8`
+- 私钥: `0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d`
+- 余额: ~10000 ETH
+
+**账户 2 (Viewer):**
+- 地址: `0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC`
+- 私钥: `0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a`
+- 余额: ~10000 ETH
+
+## 🧪 测试流程
+
+### 准备工作：给主播转 ATT 代币
+
+使用 Cast 命令或在前端操作：
+
+```bash
+# 使用 Owner 账户给 Streamer 转账
+cast send 0x5FbDB2315678afecb367f032d93F642f64180aa3 \
+  "transfer(address,uint256)" \
+  0x70997970C51812dc3A010C7d01b50e0d17dc79C8 \
+  100000000000000000000000 \
+  --rpc-url http://127.0.0.1:8545 \
+  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+
+### 测试场景 1: 主播质押流程
+
+#### 步骤 1: 连接钱包
+1. 访问 http://localhost:3000/staking
+2. 点击右上角 "Connect Wallet"
+3. 选择 MetaMask
+4. 切换到 **Localhost 8545** 网络
+5. 选择 **账户 1 (Streamer)**
+
+#### 步骤 2: 查看余额
+- 应该看到你的 ATT 余额（如果转账成功）
+- 如果余额为 0，使用上面的 cast 命令转账
+
+#### 步骤 3: 创建质押任务
+1. 选择 "Streamer Staking" 标签
+2. 输入质押金额: `10000` (ATT)
+3. 输入时长: `3600` (1小时 = 3600秒)
+4. 输入奖励率: `500` (5% = 500基点)
+5. 点击 "1. Approve ATT" 按钮
+6. 在 MetaMask 中确认交易
+7. 等待交易确认
+8. 点击 "2. Create Task" 按钮
+9. 在 MetaMask 中确认交易
+10. 等待交易确认
+
+#### 步骤 4: 查看任务
+1. 访问 http://localhost:3000/staking/my-tasks
+2. 应该看到刚创建的任务
+3. 状态显示为 "Active"
+
+#### 步骤 5: 模拟观众参与（使用 Cast）
+
+```bash
+# 切换到 Owner 账户更新观众数据
+cast send 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 \
+  "updateViewerData(uint256,uint256,uint256)" \
+  1 100 5000 \
+  --rpc-url http://127.0.0.1:8545 \
+  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+
+#### 步骤 6: 快进时间（模拟任务结束）
+
+```bash
+# 快进 3601 秒
+cast rpc evm_increaseTime 3601 --rpc-url http://127.0.0.1:8545
+cast rpc evm_mine --rpc-url http://127.0.0.1:8545
+```
+
+#### 步骤 7: 结束任务
+1. 刷新 http://localhost:3000/staking/my-tasks
+2. 点击 "End Task" 按钮
+3. 确认交易
+4. 等待确认
+
+#### 步骤 8: 领取奖励
+1. 任务状态变为 "Ended"
+2. 点击 "Claim Reward" 按钮
+3. 确认交易
+4. 查看余额增加
+
+#### 步骤 9: 等待冷却期后提取质押
+```bash
+# 快进 10 秒（测试配置）
+cast rpc evm_increaseTime 10 --rpc-url http://127.0.0.1:8545
+cast rpc evm_mine --rpc-url http://127.0.0.1:8545
+```
+
+1. 刷新页面
+2. 点击 "Unstake" 按钮
+3. 确认交易
+4. 质押代币返还
+
+### 测试场景 2: 观众奖励流程
+
+#### 步骤 1: 添加积分（使用 Cast）
+
+```bash
+# Owner 给 Viewer 添加积分
+cast send 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 \
+  "addPoints(address,uint256,uint256)" \
+  0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC \
+  5000 \
+  1 \
+  --rpc-url http://127.0.0.1:8545 \
+  --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+
+#### 步骤 2: 切换到观众账户
+1. 在 MetaMask 中切换到 **账户 2 (Viewer)**
+2. 刷新页面
+
+#### 步骤 3: 查看积分
+1. 选择 "Viewer Rewards" 标签
+2. 应该看到:
+   - Total Points: 5000
+   - Pending Points: 5000
+   - Claimable ATT: 5
+
+#### 步骤 4: 领取奖励
+1. 点击 "Claim Rewards" 按钮
+2. 确认交易
+3. 查看 ATT 余额增加 5 个代币
+
+## 🐛 常见问题
+
+### Q: 连接钱包后看不到余额？
+
+**A:** 检查以下几点：
+1. 确保 Anvil 正在运行
+2. 确保 MetaMask 连接到 Localhost 8545 网络
+3. 确保使用了正确的账户
+4. 刷新页面
+
+### Q: 交易失败？
+
+**A:** 可能的原因：
+1. Gas 不足（不太可能，测试账户有 10000 ETH）
+2. 合约地址错误（检查 `lib/contracts/staking.ts`）
+3. 参数不正确（检查输入值）
+4. 状态不对（例如任务还没结束就尝试领取奖励）
+
+### Q: 看不到任务列表？
+
+**A:** 
+1. 确保使用创建任务的账户查看
+2. 刷新页面
+3. 检查浏览器控制台是否有错误
+
+### Q: 无法创建任务？
+
+**A:**
+1. 确保已授权 ATT 代币
+2. 确保余额足够（至少 1000 ATT）
+3. 检查参数范围：
+   - 质押金额 ≥ 1000 ATT
+   - 时长: 300-86400 秒
+   - 奖励率: 100-5000 基点
+
+## 📊 测试检查清单
+
+### 前端功能
+- [ ] 连接 MetaMask
+- [ ] 显示 ATT 余额
+- [ ] 授权 ATT 代币
+- [ ] 创建质押任务
+- [ ] 查看任务列表
+- [ ] 显示任务状态
+- [ ] 结束任务
+- [ ] 领取奖励
+- [ ] 提取质押
+- [ ] 查看观众积分
+- [ ] 领取观众奖励
+
+### UI/UX
+- [ ] 加载状态显示
+- [ ] 交易确认反馈
+- [ ] 错误提示
+- [ ] 响应式设计
+- [ ] 深色模式
+
+### 数据准确性
+- [ ] 余额正确显示
+- [ ] 任务信息准确
+- [ ] 奖励计算正确
+- [ ] 状态更新及时
+
+## 🎨 调试技巧
+
+### 1. 查看浏览器控制台
+
+按 F12 打开开发者工具，查看：
+- 网络请求
+- 控制台错误
+- React 组件状态
+
+### 2. 使用 Cast 验证链上数据
+
+```bash
+# 查询余额
+cast call 0x5FbDB2315678afecb367f032d93F642f64180aa3 \
+  "balanceOf(address)(uint256)" \
+  <YOUR_ADDRESS>
+
+# 查询任务详情
+cast call 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 \
+  "tasks(uint256)" 1
+
+# 查询观众账户
+cast call 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 \
+  "getViewerAccount(address)" \
+  <VIEWER_ADDRESS>
+```
+
+### 3. 重置 Anvil
+
+如果遇到奇怪的问题，重启 Anvil：
+
+```bash
+# Ctrl+C 停止 Anvil
+# 重新启动
+anvil
+```
+
+然后重新部署合约。
+
+## 📝 测试报告模板
+
+测试完成后，记录以下信息：
+
+```
+测试日期: ___________
+测试人员: ___________
+
+功能测试:
+✅/❌ 主播质押
+✅/❌ 任务管理
+✅/❌ 奖励领取
+✅/❌ 质押提取
+✅/❌ 观众奖励
+
+发现的问题:
+1. ___________
+2. ___________
+
+建议改进:
+1. ___________
+2. ___________
+```
+
+## 🎉 测试成功！
+
+如果所有功能都正常工作，恭喜你！质押系统已经可以使用了。
+
+下一步可以考虑：
+1. 部署到 BSC 测试网
+2. 添加更多功能
+3. 优化 UI/UX
+4. 添加更多测试用例
+
+祝测试顺利！🚀

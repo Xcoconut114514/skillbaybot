@@ -1,0 +1,80 @@
+[
+  {
+    "type": "function",
+    "name": "claimReward",
+    "inputs": [],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "viewers",
+    "inputs": [{"name": "", "type": "address", "internalType": "address"}],
+    "outputs": [
+      {"name": "totalPoints", "type": "uint256", "internalType": "uint256"},
+      {"name": "claimedPoints", "type": "uint256", "internalType": "uint256"},
+      {"name": "pendingPoints", "type": "uint256", "internalType": "uint256"},
+      {"name": "totalClaimed", "type": "uint256", "internalType": "uint256"},
+      {"name": "lastClaimTime", "type": "uint256", "internalType": "uint256"}
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getViewerAccount",
+    "inputs": [{"name": "viewer", "type": "address", "internalType": "address"}],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct ViewerRewardPool.ViewerAccount",
+        "components": [
+          {"name": "totalPoints", "type": "uint256", "internalType": "uint256"},
+          {"name": "claimedPoints", "type": "uint256", "internalType": "uint256"},
+          {"name": "pendingPoints", "type": "uint256", "internalType": "uint256"},
+          {"name": "totalClaimed", "type": "uint256", "internalType": "uint256"},
+          {"name": "lastClaimTime", "type": "uint256", "internalType": "uint256"}
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getClaimableTokens",
+    "inputs": [{"name": "viewer", "type": "address", "internalType": "address"}],
+    "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "canClaim",
+    "inputs": [{"name": "viewer", "type": "address", "internalType": "address"}],
+    "outputs": [{"name": "", "type": "bool", "internalType": "bool"}],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "pointsPerToken",
+    "inputs": [],
+    "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "minClaimPoints",
+    "inputs": [],
+    "outputs": [{"name": "", "type": "uint256", "internalType": "uint256"}],
+    "stateMutability": "view"
+  },
+  {
+    "type": "event",
+    "name": "RewardClaimed",
+    "inputs": [
+      {"name": "viewer", "type": "address", "indexed": true, "internalType": "address"},
+      {"name": "points", "type": "uint256", "indexed": false, "internalType": "uint256"},
+      {"name": "tokens", "type": "uint256", "indexed": false, "internalType": "uint256"}
+    ],
+    "anonymous": false
+  }
+]

@@ -1,0 +1,124 @@
+[
+  {
+    "type": "constructor",
+    "inputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "createPurchase",
+    "inputs": [
+      { "name": "skillId", "type": "uint256", "internalType": "uint256" },
+      { "name": "telegramUserId", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "payable"
+  },
+  {
+    "type": "function",
+    "name": "activatePurchase",
+    "inputs": [
+      { "name": "purchaseId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "getPurchase",
+    "inputs": [
+      { "name": "purchaseId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct SkillMarket.Purchase",
+        "components": [
+          { "name": "buyer", "type": "address", "internalType": "address" },
+          { "name": "skillId", "type": "uint256", "internalType": "uint256" },
+          { "name": "amount", "type": "uint256", "internalType": "uint256" },
+          { "name": "timestamp", "type": "uint256", "internalType": "uint256" },
+          { "name": "isActivated", "type": "bool", "internalType": "bool" },
+          { "name": "telegramUserId", "type": "string", "internalType": "string" }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getUserPurchases",
+    "inputs": [
+      { "name": "user", "type": "address", "internalType": "address" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256[]", "internalType": "uint256[]" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getAddressByTelegram",
+    "inputs": [
+      { "name": "telegramUserId", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [
+      { "name": "", "type": "address", "internalType": "address" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getPendingPurchases",
+    "inputs": [
+      { "name": "fromId", "type": "uint256", "internalType": "uint256" },
+      { "name": "limit", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256[]", "internalType": "uint256[]" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "nextPurchaseId",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "protocolFeeBps",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "event",
+    "name": "PurchaseCreated",
+    "inputs": [
+      { "name": "purchaseId", "type": "uint256", "indexed": true },
+      { "name": "buyer", "type": "address", "indexed": true },
+      { "name": "skillId", "type": "uint256", "indexed": true },
+      { "name": "amount", "type": "uint256", "indexed": false },
+      { "name": "telegramUserId", "type": "string", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "PurchaseActivated",
+    "inputs": [
+      { "name": "purchaseId", "type": "uint256", "indexed": true },
+      { "name": "timestamp", "type": "uint256", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "TelegramLinked",
+    "inputs": [
+      { "name": "telegramUserId", "type": "string", "indexed": false },
+      { "name": "ethAddress", "type": "address", "indexed": true }
+    ]
+  }
+]
