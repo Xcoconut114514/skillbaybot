@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const ACTIVATION_SECRET = process.env.ACTIVATION_SECRET || '';
-const WEBAPP_URL = process.env.NEXT_PUBLIC_WEBAPP_URL || process.env.WEBAPP_URL || 'https://skills-bay2-pu6f-el35q0x83-leafs-projects-bc05a6b5.vercel.app';
+const WEBAPP_URL = process.env.NEXT_PUBLIC_WEBAPP_URL || process.env.WEBAPP_URL || 'https://skills-1i1wni3v3-leafs-projects-bc05a6b5.vercel.app';
 
 // ============ 存储（Vercel 无状态，用全局变量临时存） ============
 // 生产环境应用数据库，hackathon 用内存存储够了
@@ -122,9 +122,9 @@ function getBot(): Bot {
   // /start
   bot.command('start', async (ctx) => {
     const keyboard = new InlineKeyboard()
-      .webApp('📰 全球新闻 Top 10 - 0.5 TON', `${WEBAPP_URL}/skill-payment?testnet=true&startapp=skill_news_001`).row()
-      .webApp('🌤️ 智能天气管家 - 0.3 TON', `${WEBAPP_URL}/skill-payment?testnet=true&startapp=skill_weather_002`).row()
-      .webApp('🔥 极客技术热点 - 0.5 TON', `${WEBAPP_URL}/skill-payment?testnet=true&startapp=skill_tech_003`);
+      .webApp('📰 全球新闻 Top 10 - 0.01 TON', `${WEBAPP_URL}/skill-payment?testnet=true&startapp=skill_news_001`).row()
+      .webApp('🌤️ 智能天气管家 - 0.01 TON', `${WEBAPP_URL}/skill-payment?testnet=true&startapp=skill_weather_002`).row()
+      .webApp('🔥 极客技术热点 - 0.01 TON', `${WEBAPP_URL}/skill-payment?testnet=true&startapp=skill_tech_003`);
 
     await ctx.reply(
       `🛍️ *欢迎来到 SkillsBay AI 技能市场！*\n\n` +
@@ -140,9 +140,9 @@ function getBot(): Bot {
   // /skills
   bot.command('skills', async (ctx) => {
     const skills = [
-      { id: 'skill_news_001', icon: '📰', name: '全球每日新闻 Top 10', price: '0.5 TON', desc: '信息降噪，一键获取全球局势' },
-      { id: 'skill_weather_002', icon: '🌤️', name: '智能天气管家', price: '0.3 TON', desc: '决策辅助，人性化生活助理' },
-      { id: 'skill_tech_003', icon: '🔥', name: '极客技术热点', price: '0.5 TON', desc: '专业深度，解决技术焦虑' },
+      { id: 'skill_news_001', icon: '📰', name: '全球每日新闻 Top 10', price: '0.01 TON', desc: '信息降噪，一键获取全球局势' },
+      { id: 'skill_weather_002', icon: '🌤️', name: '智能天气管家', price: '0.01 TON', desc: '决策辅助，人性化生活助理' },
+      { id: 'skill_tech_003', icon: '🔥', name: '极客技术热点', price: '0.01 TON', desc: '专业深度，解决技术焦虑' },
     ];
 
     for (const skill of skills) {
