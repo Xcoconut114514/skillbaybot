@@ -156,20 +156,52 @@ function getBot(): Bot {
     }
   });
 
-  // /activate
+  // /activate — 支持硬编码激活码 + AES 加密激活码
+  const FIXED_CODES: Record<string, string> = {
+    'NEWS2026': 'skill_news_001',
+    'WEATHER2026': 'skill_weather_002',
+    'TECH2026': 'skill_tech_003',
+  };
+
   bot.command('activate', async (ctx) => {
     const code = ctx.match?.toString().trim();
     if (!code) {
-      await ctx.reply('❌ 请提供激活码\n\n用法: `/activate 你的激活码`', { parse_mode: 'Markdown' });
+      await ctx.reply(
+        '❌ 请提供激活码\n\n' +
+        '用法: `/activate 激活码`\n\n' +
+        '示例激活码：\n' +
+        '`NEWS2026` — 📰 全球新闻\n' +
+        '`WEATHER2026` — 🌤️ 天气管家\n' +
+        '`TECH2026` — 🔥 技术热点',
+        { parse_mode: 'Markdown' }
+      );
       return;
     }
 
     const userId = ctx.from?.id.toString();
     if (!userId) return;
 
+    // 先检查硬编码激活码
+    const fixedSkillId = FIXED_CODES[code.toUpperCase()];
+    if (fixedSkillId) {
+      if (hasSkill(userId, fixedSkillId)) {
+        await ctx.reply('ℹ️ 该技能已经激活过了，直接使用对应命令即可！');
+        return;
+      }
+      activateSkill(userId, fixedSkillId);
+      const name = SKILL_NAMES[fixedSkillId] || fixedSkillId;
+      const cmd = SKILL_COMMANDS[fixedSkillId] || '';
+      await ctx.reply(
+        `✅ *激活成功！*\n\n技能: ${name}\n\n现在发送 \`${cmd}\` 即可使用！`,
+        { parse_mode: 'Markdown' }
+      );
+      return;
+    }
+
+    // 再尝试 AES 加密激活码（支付流程生成的）
     const decoded = decodeActivationCode(code);
     if (!decoded) {
-      await ctx.reply('❌ 无效的激活码，请检查是否复制完整。');
+      await ctx.reply('❌ 无效的激活码，请检查是否输入正确。');
       return;
     }
 
